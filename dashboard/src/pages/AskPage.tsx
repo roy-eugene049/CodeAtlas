@@ -6,15 +6,17 @@ export function AskPage() {
   const { id } = useParams({ from: "/repositories/$id/ai" });
   const navigate = useNavigate();
   return (
-    <AskPanel
-      repoId={id}
-      onOpenCitation={(symbol) =>
-        void navigate({
-          to: "/repositories/$id/files",
-          params: { id },
-          search: { symbol },
-        })
-      }
-    />
+    <div className="mx-auto max-w-2xl">
+      <AskPanel
+        repoId={id}
+        onOpenCitation={(symbol) =>
+          void navigate({
+            to: "/repositories/$id/files",
+            params: { id },
+            search: { symbol },
+          })
+        }
+      />
+    </div>
   );
 }

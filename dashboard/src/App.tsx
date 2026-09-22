@@ -88,8 +88,8 @@ export function App() {
     <div className="app-shell">
       <header className="topbar">
         <div className="brand">
-          CODEATLAS
-          <span>code intelligence workstation</span>
+          CodeAtlas
+          <span>code intelligence</span>
         </div>
         <button className="search-trigger" onClick={() => setPaletteOpen(true)} type="button">
           Search codebase

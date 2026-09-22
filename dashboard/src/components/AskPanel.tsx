@@ -19,12 +19,9 @@ export function AskPanel({
 
   return (
     <section className="ask-workspace">
-      <header>
-        <h2>Ask CodeAtlas</h2>
-        <p className="muted">
-          Retrieval first: symbol units, then the graph, then a ranked pack. The model never sees
-          the whole repository.
-        </p>
+      <header className="page-header">
+        <h1>Ask</h1>
+        <p>Retrieval first. The model never sees the whole repository.</p>
       </header>
       <form
         className="ask-form"
@@ -39,7 +36,7 @@ export function AskPanel({
           placeholder="How does authentication work?"
           rows={3}
         />
-        <button className="primary" disabled={ask.isPending} type="submit">
+        <button className="btn btn-primary" disabled={ask.isPending} type="submit">
           {ask.isPending ? "Retrieving…" : "Ask"}
         </button>
       </form>

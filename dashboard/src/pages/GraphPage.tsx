@@ -31,7 +31,10 @@ export function GraphPage() {
 
   return (
     <div>
-      <h1 className="mb-4 text-3xl font-semibold">Graph explorer</h1>
+      <header className="page-header">
+        <h1>Graph</h1>
+        <p>Imports, calls, and references. Click a node to inspect it.</p>
+      </header>
       {graph.data ? (
         <FlowGraph
           nodes={graph.data.nodes}
@@ -43,34 +46,25 @@ export function GraphPage() {
         <p className="text-[var(--muted)]">Loading graph…</p>
       )}
       {symbol && explain.data ? (
-        <div className="mt-4 flex flex-wrap items-center justify-between gap-4 rounded-2xl border border-[var(--line)] bg-[var(--raised)] px-5 py-4">
+        <div className="panel mt-4 flex flex-wrap items-center justify-between gap-4">
           <div>
-            <div className="text-lg font-medium">{explain.data.symbol.name}</div>
-            <div className="text-sm text-[var(--muted)]">
-              Dependencies: {explain.data.dependencies.length} · Dependents:{" "}
-              {explain.data.dependents.length}
+            <div style={{ fontSize: 22, fontWeight: 590, letterSpacing: "-0.02em" }}>
+              {explain.data.symbol.name}
+            </div>
+            <div className="muted" style={{ marginTop: 4 }}>
+              {explain.data.dependencies.length} dependencies · {explain.data.dependents.length}{" "}
+              dependents
             </div>
           </div>
           <div className="flex gap-2">
             <button
-              className="rounded-lg border border-[var(--line)] px-3 py-1.5 text-sm"
+              className="btn"
               onClick={() => document.getElementById("graph-inspector")?.scrollIntoView()}
               type="button"
             >
               Explain
             </button>
-            <button
-              className="rounded-lg border border-[var(--line)] px-3 py-1.5 text-sm"
-              onClick={() => document.getElementById("graph-inspector")?.scrollIntoView()}
-              type="button"
-            >
-              Impact
-            </button>
-            <button
-              className="rounded-lg bg-[var(--accent)] px-3 py-1.5 text-sm text-[#08211c]"
-              onClick={() => openSource(symbol)}
-              type="button"
-            >
+            <button className="btn btn-primary" onClick={() => openSource(symbol)} type="button">
               Open source
             </button>
           </div>

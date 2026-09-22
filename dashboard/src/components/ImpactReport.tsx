@@ -41,8 +41,8 @@ export function ImpactReportView({
             <h3>
               {label} <span className="muted">{items.length}</span>
             </h3>
-            <div className="list">
-              {items.length === 0 ? <p className="muted">None found</p> : null}
+            <div className="grouped">
+              {items.length === 0 ? <p className="muted" style={{ padding: 12 }}>None found</p> : null}
               {items.map((item) => (
                 <SymbolHit key={item.id} symbol={item} onSelect={onSelect} />
               ))}
@@ -83,12 +83,14 @@ function SymbolHit({
   onSelect?: (id: string) => void;
 }) {
   return (
-    <button className="symbol-row" onClick={() => onSelect?.(symbol.id)} type="button">
-      <div>
+    <button className="grouped-row" onClick={() => onSelect?.(symbol.id)} type="button">
+      <span>
         <strong>{symbol.name}</strong>
-        <div className="muted">{symbol.path}</div>
-      </div>
-      <span className="badge">{symbol.kind}</span>
+        <div className="muted" style={{ marginTop: 4, fontSize: 13 }}>
+          {symbol.path}
+        </div>
+      </span>
+      <span className="muted">{symbol.kind}</span>
     </button>
   );
 }

@@ -34,24 +34,25 @@ export function CommandPalette({
           autoFocus
           value={query}
           onChange={(event) => setQuery(event.target.value)}
-          placeholder="Search symbols, then open the file"
+          placeholder="Search"
         />
         {results.data?.map((symbol) => (
           <button
-            className="symbol-row"
+            className="grouped-row"
             key={symbol.id}
             onClick={() => {
               onSelect(symbol.id);
               onClose();
             }}
-            style={{ border: 0, borderRadius: 0, width: "100%" }}
             type="button"
           >
-            <div>
+            <span>
               <strong>{symbol.name}</strong>
-              <div className="muted">{symbol.path}</div>
-            </div>
-            <span className="badge">
+              <div className="muted" style={{ marginTop: 4, fontSize: 13 }}>
+                {symbol.path}
+              </div>
+            </span>
+            <span className="muted">
               {Math.round(symbol.score * 100)}% · {symbol.kind}
             </span>
           </button>

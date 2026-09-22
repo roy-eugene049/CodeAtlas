@@ -60,20 +60,20 @@ export function OverviewPanel({ overview }: { overview?: OverviewResponse }) {
         </div>
       </section>
       {overview.languages.length > 0 ? (
-        <section className="panel">
-          <h2>Languages</h2>
-          <ul>
+        <>
+          <p className="section-label">Languages</p>
+          <div className="grouped" style={{ marginBottom: 16 }}>
             {overview.languages
               .slice()
               .sort((a, b) => (b.percent ?? 0) - (a.percent ?? 0))
               .map((item) => (
-                <li key={item.language}>
+                <div className="grouped-row" key={item.language}>
                   <span className="capitalize">{item.language}</span>
                   <span className="muted">{Math.round((item.percent ?? 0) * 100)}%</span>
-                </li>
+                </div>
               ))}
-          </ul>
-        </section>
+          </div>
+        </>
       ) : null}
       <section className="panel">
         <h2>Architecture</h2>
@@ -81,8 +81,10 @@ export function OverviewPanel({ overview }: { overview?: OverviewResponse }) {
         <div className="architecture-tree">
           {overview.architectureTree.groups.map((group) => (
             <article className="arch-group" key={group.group}>
-              <strong>{group.name}</strong>
-              <span className="muted">{group.fileCount} files</span>
+              <div className="arch-group-head">
+                <strong>{group.name}</strong>
+                <span className="muted">{group.fileCount} files</span>
+              </div>
               <ul>
                 {group.layers.map((layer) => (
                   <li key={layer.kind}>

@@ -45,46 +45,36 @@ export function IndexForm() {
         }}
       >
         <input
-          className="min-w-0 flex-1 rounded-lg border border-[var(--line)] bg-[var(--bg)] px-3 py-2 text-sm"
+          className="field"
           value={source}
           onChange={(event) => setSource(event.target.value)}
-          placeholder="https://github.com/user/project or /absolute/path"
+          placeholder="Git URL or local path"
         />
-        <button
-          className="rounded-lg bg-[var(--accent)] px-4 py-2 text-sm font-medium text-black disabled:opacity-50"
-          disabled={busy}
-          type="submit"
-        >
+        <button className="btn btn-primary" disabled={busy} type="submit">
           {busy ? "Indexing…" : "Index"}
         </button>
       </form>
-      {index.error ? <p className="text-sm text-[#ef8b8b]">{index.error.message}</p> : null}
-      {job?.error ? <p className="text-sm text-[#ef8b8b]">{job.error}</p> : null}
+      {index.error ? <p className="error">{index.error.message}</p> : null}
+      {job?.error ? <p className="error">{job.error}</p> : null}
       {job?.status === "succeeded" && job.progress.message ? (
-        <p className="text-sm text-[var(--accent)]">{job.progress.message}</p>
+        <p className="muted">{job.progress.message}</p>
       ) : null}
       {job && job.status !== "succeeded" ? (
-        <ol className="space-y-1 text-sm text-[var(--muted)]">
-          <li className={job.progress.filesDiscovered ? "text-[var(--accent)]" : ""}>
-            {job.progress.filesDiscovered ? "✓" : "●"}{" "}
+        <ol className="muted" style={{ margin: 0, paddingLeft: 18, fontSize: 13 }}>
+          <li>
             {job.progress.filesDiscovered
-              ? `${job.progress.filesDiscovered.toLocaleString()} files discovered`
-              : "Discovering files…"}
+              ? `${job.progress.filesDiscovered.toLocaleString()} files`
+              : "Discovering files"}
           </li>
-          <li className={job.progress.filesParsed + job.progress.filesSkipped ? "text-[var(--accent)]" : ""}>
-            {job.progress.filesParsed + job.progress.filesSkipped ? "✓" : "●"}{" "}
+          <li>
             {job.progress.filesParsed + job.progress.filesSkipped
-              ? `${job.progress.filesParsed.toLocaleString()} parsed, ${job.progress.filesSkipped.toLocaleString()} skipped`
-              : "Parsing changed files…"}
+              ? `${job.progress.filesParsed.toLocaleString()} parsed`
+              : "Parsing"}
           </li>
-          <li className={job.progress.symbolsExtracted ? "text-[var(--accent)]" : ""}>
-            {job.progress.symbolsExtracted ? "✓" : "●"}{" "}
+          <li>
             {job.progress.symbolsExtracted
-              ? `${job.progress.symbolsExtracted.toLocaleString()} symbols extracted`
-              : "Extracting symbols…"}
-          </li>
-          <li className={job.status === "embedding" || job.progress.chunksEmbedded ? "text-[var(--accent)]" : ""}>
-            {job.progress.chunksEmbedded ? "✓" : "●"} Generating embeddings…
+              ? `${job.progress.symbolsExtracted.toLocaleString()} symbols`
+              : "Extracting symbols"}
           </li>
         </ol>
       ) : null}

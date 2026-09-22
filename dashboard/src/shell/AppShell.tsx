@@ -6,7 +6,7 @@ import { listRepositories } from "../api";
 import { CommandPalette } from "../components/CommandPalette";
 
 const NAV = [
-  { to: "/dashboard", label: "Dashboard" },
+  { to: "/dashboard", label: "Home" },
   { to: "/repositories", label: "Repositories" },
 ] as const;
 
@@ -15,8 +15,7 @@ const REPO_NAV = [
   { to: "/repositories/$id/files", label: "Files" },
   { to: "/repositories/$id/graph", label: "Graph" },
   { to: "/repositories/$id/search", label: "Search" },
-  { to: "/repositories/$id/ai", label: "AI" },
-  { to: "/repositories/$id/insights", label: "Insights" },
+  { to: "/repositories/$id/ai", label: "Ask" },
 ] as const;
 
 export function AppShell() {
@@ -25,6 +24,7 @@ export function AppShell() {
   const repoId = params.id;
   const [paletteOpen, setPaletteOpen] = useState(false);
   const repos = useQuery({ queryKey: ["repositories"], queryFn: listRepositories });
+  const current = repos.data?.find((repo) => repo.id === repoId);
 
   useEffect(() => {
     const onKey = (event: KeyboardEvent) => {
@@ -38,62 +38,64 @@ export function AppShell() {
   }, []);
 
   return (
-    <div className="min-h-screen bg-[var(--bg)] text-[var(--text,#e7edf5)]">
-      <header className="flex items-center justify-between border-b border-[var(--line)] px-5 py-3">
-        <Link to="/dashboard" className="text-sm font-semibold tracking-[0.18em]">
-          CODEATLAS
-          <span className="ml-2 text-[11px] tracking-normal text-[var(--muted)]">
-            code intelligence
-          </span>
+    <div className="app-shell">
+      <header className="topbar">
+        <Link to="/dashboard" className="brand">
+          CodeAtlas
+          {current ? <span>{current.name}</span> : null}
         </Link>
-        <button
-          className="rounded-lg border border-[var(--line)] px-3 py-1.5 text-sm text-[var(--muted)]"
-          onClick={() => setPaletteOpen(true)}
-          type="button"
-        >
-          Search codebase <span className="ml-2 text-xs">⌘K</span>
+        <button className="search-trigger" onClick={() => setPaletteOpen(true)} type="button">
+          Search
+          <span>⌘K</span>
         </button>
       </header>
-      <div className="grid min-h-[calc(100vh-56px)] grid-cols-[220px_1fr]">
-        <aside className="flex flex-col gap-1 border-r border-[var(--line)] p-3">
+      <div className="workspace">
+        <aside className="sidebar">
+          <p className="nav-section">Library</p>
           {NAV.map((item) => (
             <Link
               key={item.to}
               to={item.to}
-              className="rounded-lg px-3 py-2 text-sm text-[var(--muted)] hover:bg-[#1a2029]"
-              activeProps={{ className: "rounded-lg px-3 py-2 text-sm bg-[#1a2029] text-white" }}
-              activeOptions={{ exact: item.to !== "/repositories" }}
+              className="nav-button"
+              activeProps={{ className: "nav-button active" }}
+              activeOptions={{ exact: true }}
             >
               {item.label}
             </Link>
           ))}
-          {repoId
-            ? REPO_NAV.map((item) => (
+          {repoId ? (
+            <>
+              <p className="nav-section">Repository</p>
+              {REPO_NAV.map((item) => (
                 <Link
                   key={item.to}
                   to={item.to}
                   params={{ id: repoId }}
-                  className="rounded-lg px-3 py-2 text-sm text-[var(--muted)] hover:bg-[#1a2029]"
-                  activeProps={{ className: "rounded-lg px-3 py-2 text-sm bg-[#1a2029] text-white" }}
+                  className="nav-button"
+                  activeProps={{ className: "nav-button active" }}
                 >
                   {item.label}
                 </Link>
-              ))
-            : null}
-          <div className="mt-4 space-y-1">
-            {(repos.data ?? []).map((repo) => (
-              <Link
-                key={repo.id}
-                to="/repositories/$id/overview"
-                params={{ id: repo.id }}
-                className="block rounded-lg px-3 py-2 text-sm text-[var(--muted)] hover:bg-[#1a2029] [&.active]:text-white"
-              >
-                {repo.name}
-              </Link>
-            ))}
-          </div>
+              ))}
+            </>
+          ) : null}
+          {(repos.data ?? []).length > 0 ? (
+            <>
+              <p className="nav-section">Indexed</p>
+              {(repos.data ?? []).map((repo) => (
+                <Link
+                  key={repo.id}
+                  to="/repositories/$id/overview"
+                  params={{ id: repo.id }}
+                  className={repo.id === repoId ? "repo-option active" : "repo-option"}
+                >
+                  {repo.name}
+                </Link>
+              ))}
+            </>
+          ) : null}
         </aside>
-        <main className="px-8 py-7">
+        <main className="main">
           <Outlet />
         </main>
       </div>

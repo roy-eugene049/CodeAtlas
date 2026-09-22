@@ -12,14 +12,16 @@ export function OverviewPage() {
   });
   return (
     <div>
-      <h1 className="mb-1 text-3xl font-semibold">
-        {overview.data?.repository.name ?? "Repository"}
-      </h1>
-      <p className="mb-6 text-[var(--muted)]">{overview.data?.repository.url}</p>
+      <header className="page-header">
+        <h1>{overview.data?.repository.name ?? "Repository"}</h1>
+        <p>{overview.data?.repository.url ?? (overview.isLoading ? "Loading…" : "")}</p>
+      </header>
       {overview.data?.aiSummary ? (
-        <p className="mb-6 max-w-3xl text-sm leading-6 text-[var(--muted)]">{overview.data.aiSummary}</p>
+        <p className="muted" style={{ maxWidth: 640, marginBottom: 28, fontSize: 17, lineHeight: 1.45 }}>
+          {overview.data.aiSummary}
+        </p>
       ) : null}
-      <OverviewPanel overview={overview.data} />
+      {overview.isLoading ? <p className="muted">Loading overview…</p> : <OverviewPanel overview={overview.data} />}
     </div>
   );
 }

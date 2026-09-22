@@ -49,19 +49,17 @@ export function Explorer({
   }, [selected?.path, path]);
 
   return (
-    <div className="grid h-[70vh] grid-cols-[220px_minmax(0,1fr)_320px] overflow-hidden rounded-2xl border border-[var(--line)]">
-      <aside className="overflow-auto border-r border-[var(--line)] bg-[var(--raised)] p-3 text-sm">
+    <div className="grid h-[70vh] grid-cols-[220px_minmax(0,1fr)_300px] overflow-hidden rounded-[14px] bg-[var(--raised)]">
+      <aside className="overflow-auto border-r border-[var(--line)] p-2 text-[13px]">
         {groupedFiles(files.data ?? []).map((group) => (
           <div key={group.dir} className="mb-3">
-            <p className="mb-1 px-2 text-[11px] uppercase tracking-wide text-[var(--muted)]">
+            <p className="nav-section" style={{ marginTop: 8 }}>
               {group.dir}
             </p>
             {group.files.map((file) => (
               <button
                 key={file.id}
-                className={`mb-1 block w-full truncate rounded px-2 py-1 text-left ${
-                  path === file.path ? "bg-[#1a2029] text-white" : "text-[var(--muted)]"
-                }`}
+                className={path === file.path ? "nav-button active" : "nav-button"}
                 onClick={() => setPath(file.path)}
                 type="button"
               >
@@ -81,21 +79,25 @@ export function Explorer({
             options={{ readOnly: true, minimap: { enabled: false }, fontSize: 13 }}
           />
         ) : (
-          <p className="p-6 text-sm text-[var(--muted)]">Select a file.</p>
+          <p className="p-8 muted">Select a file.</p>
         )}
       </div>
       <aside className="overflow-auto border-l border-[var(--line)] p-3">
-        <p className="mb-2 text-xs uppercase tracking-wide text-[var(--muted)]">Intelligence</p>
-        <div className="mb-4 space-y-1">
+        <p className="nav-section" style={{ marginTop: 4 }}>
+          Symbols
+        </p>
+        <div className="mb-4">
           {fileSymbols.map((symbol) => (
             <button
               key={symbol.id}
-              className="block w-full rounded px-2 py-1 text-left text-sm hover:bg-[#1a2029]"
+              className={selectedSymbolId === symbol.id ? "nav-button active" : "nav-button"}
               onClick={() => onSelect(symbol.id)}
               type="button"
             >
               {symbol.name}
-              <span className="ml-2 text-xs text-[var(--muted)]">{symbol.kind}</span>
+              <span className="muted" style={{ marginLeft: 8, fontSize: 12 }}>
+                {symbol.kind}
+              </span>
             </button>
           ))}
         </div>

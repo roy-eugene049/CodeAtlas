@@ -20,34 +20,32 @@ export function InsightsPanel({ repoId, selectedSymbolId, onSelect }: Props) {
 
   return (
     <div>
-      <p className="muted">
-        Select a symbol. Explain reads the unit. Dependencies and impact walk the graph — then AI
-        narrates the counts.
-      </p>
-      <form className="index-form" onSubmit={(event) => event.preventDefault()}>
-        <input
-          value={query}
-          onChange={(event) => setQuery(event.target.value)}
-          placeholder="handlePayment, UserService.updateUser"
-        />
-      </form>
+      <input
+        className="field"
+        style={{ marginBottom: 16 }}
+        value={query}
+        onChange={(event) => setQuery(event.target.value)}
+        placeholder="handlePayment, UserService.updateUser"
+      />
       {hits.data && hits.data.length > 0 ? (
-        <div className="list" style={{ marginTop: 12 }}>
+        <div className="grouped" style={{ marginBottom: 24 }}>
           {hits.data.slice(0, 10).map((symbol) => (
             <button
               key={symbol.id}
-              className="symbol-row"
+              className="grouped-row"
               onClick={() => {
                 onSelect(symbol.id);
                 setQuery("");
               }}
               type="button"
             >
-              <div>
+              <span>
                 <strong>{symbol.name}</strong>
-                <div className="muted">{symbol.path}</div>
-              </div>
-              <span className="badge">{symbol.kind}</span>
+                <div className="muted" style={{ marginTop: 4, fontSize: 13 }}>
+                  {symbol.path}
+                </div>
+              </span>
+              <span className="muted">{symbol.kind}</span>
             </button>
           ))}
         </div>

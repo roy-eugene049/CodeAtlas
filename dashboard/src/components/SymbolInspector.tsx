@@ -46,24 +46,26 @@ export function SymbolInspector({
           <p className="muted">{explain.data?.symbol.path ?? impact.data?.origin.path}</p>
         </div>
         <div className="inspector-tabs">
-          {(
-            [
-              ["explain", "Explain"],
-              ["dependencies", "Dependencies"],
-              ["impact", "Impact"],
-            ] as const
-          ).map(([id, label]) => (
-            <button
-              key={id}
-              className={`inspector-tab${tab === id ? " active" : ""}`}
-              onClick={() => setTab(id)}
-              type="button"
-            >
-              {label}
-            </button>
-          ))}
+          <div className="segmented">
+            {(
+              [
+                ["explain", "Explain"],
+                ["dependencies", "Dependencies"],
+                ["impact", "Impact"],
+              ] as const
+            ).map(([id, label]) => (
+              <button
+                key={id}
+                className={tab === id ? "active" : ""}
+                onClick={() => setTab(id)}
+                type="button"
+              >
+                {label}
+              </button>
+            ))}
+          </div>
           {onOpenSource ? (
-            <button className="inspector-tab" onClick={() => onOpenSource(symbolId)} type="button">
+            <button className="btn" onClick={() => onOpenSource(symbolId)} type="button">
               Open source
             </button>
           ) : null}
@@ -179,21 +181,21 @@ function RefList({
     <div>
       {title ? <h3>{title}</h3> : null}
       {items.length === 0 ? <p className="muted">{empty}</p> : null}
-      <div className="list">
+      <div className="grouped">
         {items.map((item) => (
           <button
             key={`${item.id}-${item.relation}`}
-            className="symbol-row"
+            className="grouped-row"
             onClick={() => onSelect(item.id)}
             type="button"
           >
-            <div>
-              <strong>→ {item.name}</strong>
-              <div className="muted">
+            <span>
+              <strong>{item.name}</strong>
+              <div className="muted" style={{ marginTop: 4, fontSize: 13 }}>
                 {item.path} · {item.relation}
               </div>
-            </div>
-            <span className="badge">{item.kind}</span>
+            </span>
+            <span className="muted">{item.kind}</span>
           </button>
         ))}
       </div>

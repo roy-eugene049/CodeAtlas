@@ -7,24 +7,29 @@ import { IndexForm } from "../components/IndexForm";
 export function RepositoriesPage() {
   const repos = useQuery({ queryKey: ["repositories"], queryFn: listRepositories });
   return (
-    <div>
-      <h1 className="mb-4 text-3xl font-semibold">Repositories</h1>
-      <section className="mb-6 max-w-3xl">
+    <div className="mx-auto max-w-2xl">
+      <header className="page-header">
+        <h1>Repositories</h1>
+        <p>Add a local path or Git URL. Reindex uses the commit range.</p>
+      </header>
+      <section className="panel">
         <IndexForm />
       </section>
-      <div className="grid gap-3 md:grid-cols-2">
+      <div className="grouped">
         {(repos.data ?? []).map((repo) => (
           <Link
             key={repo.id}
             to="/repositories/$id/overview"
             params={{ id: repo.id }}
-            className="rounded-2xl border border-[var(--line)] bg-[var(--raised)] p-5 hover:border-[var(--accent)]"
+            className="grouped-row"
           >
-            <strong>{repo.name}</strong>
-            <p className="mt-1 truncate text-sm text-[var(--muted)]">{repo.url}</p>
-            <p className="mt-2 text-xs text-[var(--muted)]">
-              {repo.defaultBranch} · {repo.commitSha.slice(0, 8)} · {repo.lineCount.toLocaleString()} lines
-            </p>
+            <span>
+              <strong>{repo.name}</strong>
+              <div className="muted" style={{ marginTop: 4, fontSize: 13 }}>
+                {repo.defaultBranch} · {repo.commitSha.slice(0, 8)}
+              </div>
+            </span>
+            <span className="muted">{repo.lineCount.toLocaleString()} lines</span>
           </Link>
         ))}
       </div>

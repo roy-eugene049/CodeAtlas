@@ -61,10 +61,11 @@ export function FlowGraph({
         position: { x: node.x * 1.4 + 400, y: node.y + 200 },
         data: { label: `${node.name}\n${nodeBucket(node)}` },
         style: {
-          border: node.id === selectedId ? "1px solid #7dd3c0" : "1px solid #232a34",
-          background: "#12161c",
-          color: "#e7edf5",
+          border: node.id === selectedId ? "1px solid #0a84ff" : "1px solid rgba(255,255,255,0.08)",
+          background: "#2c2c2e",
+          color: "rgba(255,255,255,0.92)",
           fontSize: 12,
+          borderRadius: 10,
           width: 168,
         },
       })),
@@ -91,24 +92,32 @@ export function FlowGraph({
   return (
     <div>
       <div className="mb-3 flex flex-wrap gap-2">
-        {EDGE_FILTERS.map((kind) => (
-          <FilterChip
-            key={kind}
-            label={kind}
-            active={edgeKinds.includes(kind)}
-            onClick={() => toggle(setEdgeKinds, kind)}
-          />
-        ))}
-        {NODE_FILTERS.map((kind) => (
-          <FilterChip
-            key={kind}
-            label={kind}
-            active={nodeKinds.includes(kind)}
-            onClick={() => toggle(setNodeKinds, kind)}
-          />
-        ))}
+        <div className="segmented">
+          {EDGE_FILTERS.map((kind) => (
+            <button
+              key={kind}
+              className={edgeKinds.includes(kind) ? "active" : ""}
+              onClick={() => toggle(setEdgeKinds, kind)}
+              type="button"
+            >
+              {kind}
+            </button>
+          ))}
+        </div>
+        <div className="segmented">
+          {NODE_FILTERS.map((kind) => (
+            <button
+              key={kind}
+              className={nodeKinds.includes(kind) ? "active" : ""}
+              onClick={() => toggle(setNodeKinds, kind)}
+              type="button"
+            >
+              {kind}
+            </button>
+          ))}
+        </div>
       </div>
-      <div className="h-[520px] overflow-hidden rounded-2xl border border-[var(--line)]">
+      <div className="h-[520px] overflow-hidden rounded-[14px] bg-[var(--raised)]">
         <ReactFlow
           nodes={flowNodes}
           edges={flowEdges}
@@ -117,33 +126,11 @@ export function FlowGraph({
           onNodeClick={(_, node) => onSelect(node.id)}
           proOptions={{ hideAttribution: true }}
         >
-          <Background color="#232a34" />
+          <Background color="#3a3a3c" gap={20} />
           <Controls />
         </ReactFlow>
       </div>
     </div>
-  );
-}
-
-function FilterChip({
-  label,
-  active,
-  onClick,
-}: {
-  label: string;
-  active: boolean;
-  onClick: () => void;
-}) {
-  return (
-    <button
-      className={`rounded-full border px-3 py-1 text-xs capitalize ${
-        active ? "border-[var(--accent)] text-[var(--accent)]" : "border-[var(--line)] text-[var(--muted)]"
-      }`}
-      onClick={onClick}
-      type="button"
-    >
-      {label}
-    </button>
   );
 }
 

@@ -8,7 +8,10 @@ export function FilesPage() {
   const navigate = useNavigate();
   return (
     <div>
-      <h1 className="mb-4 text-3xl font-semibold">Code explorer</h1>
+      <header className="page-header">
+        <h1>Files</h1>
+        <p>Source on the left, editor in the middle, symbols on the right.</p>
+      </header>
       <Explorer
         repoId={id}
         selectedSymbolId={search.symbol}

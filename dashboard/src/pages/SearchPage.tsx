@@ -31,21 +31,23 @@ export function SearchPage() {
   const hits = (results.data ?? []).filter((hit) => matchesFilter(hit, kind));
 
   return (
-    <div>
-      <h1 className="mb-4 text-3xl font-semibold">Search</h1>
+    <div className="mx-auto max-w-2xl">
+      <header className="page-header">
+        <h1>Search</h1>
+        <p>Symbols ranked by name, path, and retrieved meaning.</p>
+      </header>
       <input
-        className="mb-4 w-full max-w-xl rounded-lg border border-[var(--line)] bg-[var(--bg)] px-3 py-2"
+        className="field"
+        style={{ fontSize: 20, padding: "14px 16px", marginBottom: 16 }}
         value={query}
         onChange={(event) => setQuery(event.target.value)}
         placeholder="How does authentication work?"
       />
-      <div className="mb-4 flex gap-2">
+      <div className="segmented" style={{ marginBottom: 20 }}>
         {FILTERS.map((item) => (
           <button
             key={item}
-            className={`rounded-full border px-3 py-1 text-xs capitalize ${
-              kind === item ? "border-[var(--accent)] text-[var(--accent)]" : "border-[var(--line)]"
-            }`}
+            className={kind === item ? "active" : ""}
             onClick={() => setKind(item)}
             type="button"
           >
@@ -53,11 +55,11 @@ export function SearchPage() {
           </button>
         ))}
       </div>
-      <div className="space-y-2">
+      <div className="grouped">
         {hits.map((hit) => (
           <button
             key={hit.id}
-            className="flex w-full items-center justify-between rounded-xl border border-[var(--line)] px-4 py-3 text-left"
+            className="grouped-row"
             onClick={() =>
               void navigate({
                 to: "/repositories/$id/files",
@@ -67,11 +69,13 @@ export function SearchPage() {
             }
             type="button"
           >
-            <div>
+            <span>
               <strong>{hit.name}</strong>
-              <div className="text-sm text-[var(--muted)]">{hit.path}</div>
-            </div>
-            <span className="text-sm text-[var(--accent)]">{Math.round(hit.score * 100)}% relevance</span>
+              <div className="muted" style={{ marginTop: 4, fontSize: 13 }}>
+                {hit.path}
+              </div>
+            </span>
+            <span className="muted">{Math.round(hit.score * 100)}%</span>
           </button>
         ))}
       </div>
