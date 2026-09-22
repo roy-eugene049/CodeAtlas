@@ -3,6 +3,7 @@ resolver = "2"
 members = [
     "crates/domain",
     "crates/parser",
+    "crates/graph",
 ]
 
 [workspace.package]
@@ -14,6 +15,7 @@ publish = false
 [workspace.dependencies]
 codeatlas-domain = { path = "crates/domain" }
 codeatlas-parser = { path = "crates/parser" }
+codeatlas-graph = { path = "crates/graph" }
 
 uuid = { version = "1", features = ["v4", "v5", "serde"] }
 tree-sitter = "0.25"
