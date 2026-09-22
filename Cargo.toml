@@ -10,6 +10,7 @@ members = [
     "crates/search",
     "crates/ai",
     "crates/api",
+    "benchmarks",
 ]
 
 [workspace.package]
@@ -52,3 +53,4 @@ serde_json = "1"
 thiserror = "2"
 anyhow = "1"
 tempfile = "3"
+criterion = "0.5"

@@ -1,0 +1,42 @@
+[package]
+name = "codeatlas-benchmarks"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+publish.workspace = true
+
+[dependencies]
+codeatlas-ai.workspace = true
+codeatlas-domain.workspace = true
+codeatlas-graph.workspace = true
+codeatlas-indexer.workspace = true
+codeatlas-parser.workspace = true
+codeatlas-search.workspace = true
+tempfile.workspace = true
+
+[dev-dependencies]
+criterion.workspace = true
+
+[[bin]]
+name = "measure"
+path = "measure.rs"
+
+[[bench]]
+name = "parser"
+harness = false
+path = "parser.rs"
+
+[[bench]]
+name = "indexing"
+harness = false
+path = "indexing.rs"
+
+[[bench]]
+name = "graph"
+harness = false
+path = "graph.rs"
+
+[[bench]]
+name = "search"
+harness = false
+path = "search.rs"
