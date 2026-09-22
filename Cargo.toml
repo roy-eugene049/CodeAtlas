@@ -2,6 +2,7 @@
 resolver = "2"
 members = [
     "crates/domain",
+    "crates/parser",
 ]
 
 [workspace.package]
@@ -12,8 +13,14 @@ publish = false
 
 [workspace.dependencies]
 codeatlas-domain = { path = "crates/domain" }
+codeatlas-parser = { path = "crates/parser" }
 
 uuid = { version = "1", features = ["v4", "v5", "serde"] }
+tree-sitter = "0.25"
+tree-sitter-javascript = "0.25"
+tree-sitter-python = "0.25"
+tree-sitter-rust = "0.24"
+tree-sitter-typescript = "0.23"
 serde = { version = "1", features = ["derive"] }
 serde_json = "1"
 thiserror = "2"
