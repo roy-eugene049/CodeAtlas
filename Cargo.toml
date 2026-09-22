@@ -9,6 +9,7 @@ members = [
     "crates/storage",
     "crates/search",
     "crates/ai",
+    "crates/api",
 ]
 
 [workspace.package]
@@ -34,6 +35,11 @@ blake3 = "1"
 ignore = "0.4"
 rayon = "1.10"
 tracing = "0.1"
+tracing-subscriber = { version = "0.3", features = ["env-filter"] }
+axum = "0.8"
+tokio = { version = "1", features = ["full"] }
+tokio-stream = { version = "0.1", features = ["sync"] }
+tower-http = { version = "0.6", features = ["cors", "fs"] }
 
 uuid = { version = "1", features = ["v4", "v5", "serde"] }
 tree-sitter = "0.25"

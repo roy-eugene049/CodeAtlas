@@ -1,0 +1,29 @@
+[package]
+name = "codeatlas-api"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+publish.workspace = true
+
+[dependencies]
+anyhow.workspace = true
+axum.workspace = true
+codeatlas-ai.workspace = true
+codeatlas-domain.workspace = true
+codeatlas-git.workspace = true
+codeatlas-graph.workspace = true
+codeatlas-indexer.workspace = true
+codeatlas-search.workspace = true
+codeatlas-storage.workspace = true
+futures = "0.3"
+serde.workspace = true
+serde_json.workspace = true
+tokio.workspace = true
+tokio-stream.workspace = true
+ureq = { version = "2", default-features = false, features = ["json", "tls"] }
+tower-http.workspace = true
+tracing.workspace = true
+tracing-subscriber.workspace = true
+
+[dev-dependencies]
+tempfile.workspace = true
