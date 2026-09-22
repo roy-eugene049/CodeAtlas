@@ -1,0 +1,10 @@
+/target
+.data
+*.db
+.DS_Store
+.env
+.env.*
+/dashboard/node_modules
+/dashboard/dist
+/dashboard/.vite
+*.tsbuildinfo
