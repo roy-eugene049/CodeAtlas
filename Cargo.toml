@@ -8,6 +8,7 @@ members = [
     "crates/indexer",
     "crates/storage",
     "crates/search",
+    "crates/ai",
 ]
 
 [workspace.package]
@@ -24,6 +25,7 @@ codeatlas-git = { path = "crates/git" }
 codeatlas-indexer = { path = "crates/indexer" }
 codeatlas-storage = { path = "crates/storage" }
 codeatlas-search = { path = "crates/search" }
+codeatlas-ai = { path = "crates/ai" }
 
 postgres = { version = "0.19", features = ["with-serde_json-1"] }
 rusqlite = { version = "0.32", features = ["bundled"] }
